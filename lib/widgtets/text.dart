@@ -22,7 +22,7 @@ class _CustomTextState extends State<CustomText> {
           ),
         );
       },
-      child: Text("Tween Animation Controller", style: TextStyle(fontSize: 20)),
+      child: Text("Practise Animation", style: TextStyle(fontSize: 20)),
     );
   }
 }
