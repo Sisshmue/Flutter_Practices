@@ -12,6 +12,7 @@ class _CustomTextState extends State<CustomText> {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
       duration: const Duration(milliseconds: 500),
+      curve: Curves.easeIn,
       tween: Tween<double>(begin: 0, end: 1),
       builder: (BuildContext context, double val, child) {
         return Opacity(

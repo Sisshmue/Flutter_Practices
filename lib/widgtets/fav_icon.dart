@@ -14,6 +14,7 @@ class _FavIconState extends State<FavIcon> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Color?> _animation;
   late Animation<double?> _sizeAnimation;
+  late CurvedAnimation _curveAnimation;
 
   @override
   void initState() {
@@ -23,15 +24,20 @@ class _FavIconState extends State<FavIcon> with SingleTickerProviderStateMixin {
       duration: const Duration(milliseconds: 300),
     );
 
+    _curveAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.bounceIn,
+    );
+
     _animation = ColorTween(
       begin: Colors.grey[400],
       end: Colors.pink,
-    ).animate(_controller);
+    ).animate(_curveAnimation);
 
     _sizeAnimation = TweenSequence(<TweenSequenceItem<double>>[
       TweenSequenceItem(tween: Tween<double>(begin: 30, end: 50), weight: 50),
       TweenSequenceItem(tween: Tween<double>(begin: 50, end: 30), weight: 50),
-    ]).animate(_controller);
+    ]).animate(_curveAnimation);
   }
 
   @override
