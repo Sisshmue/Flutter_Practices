@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/model/hero_tile.dart';
 
+// ignore: must_be_immutable
 class FavIcon extends StatefulWidget {
   HeroTile heroTile;
   FavIcon({super.key, required this.heroTile});
