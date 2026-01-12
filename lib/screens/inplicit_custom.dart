@@ -15,17 +15,23 @@ class InplicitCustom extends StatefulWidget {
 
 class _InplicitCustomState extends State<InplicitCustom>
     with SingleTickerProviderStateMixin {
+  //list
+  List<Widget> tileLst = [];
+  //datasource
   List<HeroTile> _list = [
     HeroTile(img: 'bird', name: 'Bird', des: 'This is a bird'),
     HeroTile(img: 'clover', name: 'Clover Leaf', des: 'This is a clover leaf'),
     HeroTile(img: 'dice', name: 'Dice', des: 'This is a dice'),
   ];
 
-  ListView buildListTile(List<HeroTile> list) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        final currentTile = list[index];
-        return ListTile(
+  //global key
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+
+  //add to tileList with animation
+  Future<void> addtoList() async {
+    for (var currentTile in _list) {
+      tileLst.add(
+        ListTile(
           onTap: () {
             Navigator.push(
               context,
@@ -41,11 +47,22 @@ class _InplicitCustomState extends State<InplicitCustom>
           title: Text(currentTile.name),
           subtitle: Text(currentTile.des),
           trailing: FavIcon(heroTile: currentTile),
-        );
-      },
-      itemCount: list.length,
-    );
+        ),
+      );
+      _listKey.currentState!.insertItem(tileLst.length - 1);
+      await Future.delayed(const Duration(milliseconds: 1000));
+    }
   }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      addtoList();
+    });
+  }
+
+  Tween<Offset> _offSet = Tween(begin: Offset(-1, 0), end: Offset(0, 0));
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +70,22 @@ class _InplicitCustomState extends State<InplicitCustom>
       appBar: AppBar(title: CustomText()),
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0),
-        child: Column(children: [Expanded(child: buildListTile(_list))]),
+        child: Column(
+          children: [
+            Expanded(
+              child: AnimatedList(
+                key: _listKey,
+                initialItemCount: tileLst.length,
+                itemBuilder: (context, index, animation) {
+                  return SlideTransition(
+                    position: animation.drive(_offSet),
+                    child: tileLst[index],
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
