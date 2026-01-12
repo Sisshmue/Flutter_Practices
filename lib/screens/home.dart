@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/model/hero_tile.dart';
 import 'package:flutter_practice/widgtets/deatil.dart';
+import 'package:flutter_practice/widgtets/dice.dart';
 import 'package:flutter_practice/widgtets/fav_icon.dart';
 import 'package:flutter_practice/widgtets/text.dart';
 
@@ -26,6 +27,7 @@ class _InplicitCustomState extends State<InplicitCustom>
 
   //global key
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  final GlobalKey<DiceState> _diceKey = GlobalKey<DiceState>();
 
   //add to tileList with animation
   Future<void> addtoList() async {
@@ -72,7 +74,7 @@ class _InplicitCustomState extends State<InplicitCustom>
         padding: const EdgeInsets.only(left: 20.0),
         child: Column(
           children: [
-            Expanded(
+            Flexible(
               child: AnimatedList(
                 key: _listKey,
                 initialItemCount: tileLst.length,
@@ -84,8 +86,15 @@ class _InplicitCustomState extends State<InplicitCustom>
                 },
               ),
             ),
+            Flexible(flex: 2, child: Dice(key: _diceKey)),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _diceKey.currentState!.rollDice();
+        },
+        child: Icon(Icons.play_arrow),
       ),
     );
   }
