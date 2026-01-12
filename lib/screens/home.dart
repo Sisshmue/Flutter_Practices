@@ -86,7 +86,7 @@ class _InplicitCustomState extends State<InplicitCustom>
                 },
               ),
             ),
-            Flexible(flex: 2, child: Dice(key: _diceKey)),
+            Expanded(child: Dice(key: _diceKey)),
           ],
         ),
       ),
