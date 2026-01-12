@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/screens/inplicit_custom.dart';
+import 'package:flutter_practice/screens/home.dart';
 
 void main() {
   runApp(const MyApp());
