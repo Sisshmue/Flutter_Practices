@@ -10,22 +10,28 @@ class FavIcon extends StatefulWidget {
   State<FavIcon> createState() => _FavIconState();
 }
 
-class _FavIconState extends State<FavIcon>  with SingleTickerProviderStateMixin{
+class _FavIconState extends State<FavIcon> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation _animation;
+  late Animation<Color?> _animation;
+  late Animation<double?> _sizeAnimation;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 300),
     );
 
     _animation = ColorTween(
       begin: Colors.grey[400],
       end: Colors.pink,
     ).animate(_controller);
+
+    _sizeAnimation = TweenSequence(<TweenSequenceItem<double>>[
+      TweenSequenceItem(tween: Tween<double>(begin: 30, end: 50), weight: 50),
+      TweenSequenceItem(tween: Tween<double>(begin: 50, end: 30), weight: 50),
+    ]).animate(_controller);
   }
 
   @override
@@ -50,8 +56,10 @@ class _FavIconState extends State<FavIcon>  with SingleTickerProviderStateMixin{
           },
           icon: Icon(
             Icons.favorite,
-            color: widget.heroTile.isClicked ? _animation.value : Colors.grey[400],
-            size: 30,
+            color: widget.heroTile.isClicked
+                ? _animation.value
+                : Colors.grey[400],
+            size: _sizeAnimation.value,
           ),
         );
       },

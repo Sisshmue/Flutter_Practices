@@ -21,8 +21,6 @@ class _InplicitCustomState extends State<InplicitCustom>
     HeroTile(img: 'dice', name: 'Dice', des: 'This is a dice'),
   ];
 
-  
-
   ListView buildListTile(List<HeroTile> list) {
     return ListView.builder(
       itemBuilder: (context, index) {
@@ -42,7 +40,7 @@ class _InplicitCustomState extends State<InplicitCustom>
           ),
           title: Text(currentTile.name),
           subtitle: Text(currentTile.des),
-          trailing: FavIcon(heroTile: currentTile,)
+          trailing: FavIcon(heroTile: currentTile),
         );
       },
       itemCount: list.length,
@@ -55,12 +53,7 @@ class _InplicitCustomState extends State<InplicitCustom>
       appBar: AppBar(title: CustomText()),
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0),
-        child: Column(
-          children: [
-            Text('Hero Animation', style: TextStyle(fontSize: 20)),
-            Expanded(child: buildListTile(_list)),
-          ],
-        ),
+        child: Column(children: [Expanded(child: buildListTile(_list))]),
       ),
     );
   }
